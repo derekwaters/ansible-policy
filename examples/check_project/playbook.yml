@@ -35,6 +35,10 @@
         name: "{{ package_list }}"
         state: present
 
+    - name: Show the package list
+      ansible.builtin.debug:
+        var: package_list
+
     - name: Set MySQL root password [using unauthorized collection]
       community.mysql.mysql_user:
         name: root

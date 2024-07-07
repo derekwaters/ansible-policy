@@ -1,0 +1,20 @@
+# package-example.yml
+---
+- name: Check for using debug
+  hosts: localhost
+  vars:
+    prohibited_fqcn: "ansible.builtin.debug"
+    prohibited_shortname: "debug"
+    prohibited_collection: "ansible.builtin"
+  policies:
+    - name: Check for debug task
+      target: task
+      condition:
+        any:
+          - input._agk.task.module_info.fqcn == prohibited_fqcn
+          - input._agk.task.module_info.collection == prohibited_collection and input._agk.task.module_info.short_name == prohibited_shortname
+      actions:
+        - deny:
+            msg: ansible.builtin.debug is not allowed in production code.
+      tags:
+        - compliance
