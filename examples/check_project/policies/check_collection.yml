@@ -6,6 +6,10 @@
     allowed_collections:
       - ansible.builtin
       - amazon.aws
+      - local_client.vault
+      - hashicorp.vault
+      - local_client.controller_configuration
+      - infra.controller_configuration
   policies:
     - name: Check for collection name
       target: task

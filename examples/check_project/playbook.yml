@@ -39,6 +39,14 @@
       ansible.builtin.debug:
         var: package_list
 
+    - name: Get a key from Hashicorp Vault
+      hashicorp.vault.lookup:
+        key: some_key
+
+    - name: Get a key from Hashicorp Vault using the opinionated collection
+      local_client.vault.lookup:
+        key: some_key
+
     - name: Set MySQL root password [using unauthorized collection]
       community.mysql.mysql_user:
         name: root

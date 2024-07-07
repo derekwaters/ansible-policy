@@ -1,0 +1,17 @@
+# package-example.yml
+---
+- name: Check for use of opinionated (local) collections
+  hosts: localhost
+  vars:
+    opinionated_collections:
+      hashicorp.vault: local_client.vault
+      infra.controller_configuration: local_client.controller_configuration
+  policies:
+    - name: Check for use of opinionated collections
+      target: task
+      condition: opinionated_collections has key input._agk.task.module_info.collection 
+      actions:
+        - warn:
+            msg: The collection {{ input._agk.task.module_info.collection }} should not be used. The client-specific {{ opinionated_collections[input._agk.task.module_info.collection] }} should be used instead.
+      tags:
+        - best-practice
